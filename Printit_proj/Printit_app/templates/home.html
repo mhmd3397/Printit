@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printit</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-success">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="{% url 'home' %}">Printit</a>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="form-control mr-sm-2">Welcome!</div>
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Login</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid bg-secondary bg-gradient py-5" style="height: 100vh;">
+        <div class="row h-auto">
+            <div class="col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Welcome to Printit!</h3>
+                        <p class="card-text">Printing ideas has never been easier! We understand how tiresome it can
+                            be to find and share ideas in a crowded and time-consuming world. That's why we've created
+                            a platform that allows you to showcase your brilliant ideas and share them with others.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card bg-light h-100">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <a href="{% url 'register' %}"
+                            class="btn btn-primary btn-lg btn-block bg-success text-white">Start Sharing
+                            Ideas</a>
+                        <br>
+                        <a class="login-link mt-2 text-center text-danger" href="{% url 'login' %}">Already registered?
+                            Log
+                            in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Ideas -->
+        <div class="container">
+            <h2>Featured Ideas</h2>
+            <div class="row">
+                {% for idea in featured_ideas %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ idea.title }}</h5>
+                            <p class="card-text">{{ idea.content }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Featured Users -->
+        <div class="container">
+            <h2>Featured Users</h2>
+            <div class="row">
+                {% for user in featured_users %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                            {% if user.bio %}
+                            <p class="card-text">{{ user.bio }}</p>
+                            {% else %}
+                            <p class="card-text">No bio available.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
