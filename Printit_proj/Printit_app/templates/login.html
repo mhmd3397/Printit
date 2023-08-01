@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printit - Register</title>
+    <title>Printit - Login</title>
     {% load static %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
             <a class="navbar-brand text-white" href="{% url 'home' %}">Printit</a>
             <div class="form-inline my-2 my-lg-0">
                 <div class="form-control mr-sm-2">Welcome!</div>
-                <a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'register' %}">Register</a>
             </div>
         </div>
     </nav>
@@ -25,19 +25,11 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-success text-white">
-                        <h3 class="mb-0">Register</h3>
+                        <h3 class="mb-0">Login</h3>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{% url 'register' %}">
+                        <form method="post" action="{% url 'login' %}">
                             {% csrf_token %}
-                            <div class="form-group">
-                                <label for="first_name">First Name</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" required>
-                            </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
@@ -46,16 +38,7 @@
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <div class="form-group">
-                                <label for="confirm_password">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password"
-                                    name="confirm_password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bio">Bio (Optional)</label>
-                                <textarea class="form-control" id="bio" name="bio" rows="3"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success">Register</button>
+                            <button type="submit" class="btn btn-success">Login</button>
                             {% if messages %}
                             <ul class="messages">
                                 {% for message in messages %}

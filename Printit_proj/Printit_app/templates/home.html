@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Printit</title>
     {% load static %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
-<body>
+<body style="font-family: 'Roboto', sans-serif;">
     <nav class="navbar navbar-expand-lg bg-success">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="{% url 'home' %}">Printit</a>
-            <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'home' %}">
-                {% csrf_token %}
+            <div class="form-inline my-2 my-lg-0">
                 <div class="form-control mr-sm-2">Welcome!</div>
-                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Login</button>
-            </form>
+                <a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'login' %}">Login</a>
+            </div>
         </div>
     </nav>
     <div class="container-fluid bg-secondary bg-gradient py-5" style="height: 100vh;">
