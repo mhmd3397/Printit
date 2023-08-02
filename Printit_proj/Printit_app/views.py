@@ -160,7 +160,7 @@ def create_idea(request):
             'user': user
         }
         # Redirect to the view idea page for the newly created idea
-        return redirect('view_idea', context, idea_id=idea.id,)
+        return redirect('view_idea', idea_id=idea.id)
     # If the request method is GET, display the create idea form
     return render(request, 'create_idea.html')
 
