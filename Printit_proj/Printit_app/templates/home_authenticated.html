@@ -14,8 +14,9 @@
     <nav class="navbar navbar-expand-lg bg-success">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="{% url 'home' %}">Printit</a>
-            <button class="navbar-toggler btn btn-outline-danger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler btn btn-outline-danger" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="btn btn-outline-danger">menu</span>
             </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -86,8 +87,10 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'user_ideas' user.id %}">{{ user.first_name }}
-                                    {{ user.last_name }}</a></h5>
+                            <h5 class="card-title">
+                                <a href="{% url 'user_ideas' user.id %}">{{ user.first_name }}
+                                    {{ user.last_name }}</a>
+                            </h5>
                             {% if user.bio %}
                             <p class="card-text">{{ user.bio }}</p>
                             {% else %}

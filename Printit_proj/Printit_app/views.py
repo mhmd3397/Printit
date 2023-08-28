@@ -1,7 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Idea, User, Comment, Star
+from .models import Idea, User, Comment, Star   # noqa
 from django.contrib import messages
-import bcrypt
+import bcrypt   # noqa
+
+# If the user is not logged in, display the regular home page
+featured_ideas_stars = Idea.objects.all().order_by('-star__stars')[:3]
+featured_ideas_comments = Idea.objects.all().order_by('-comment__id')[:3]
+featured_ideas = (featured_ideas_stars | featured_ideas_comments)[:3]
+featured_users_ideas = User.objects.all().order_by('-idea__id')[:3]
+featured_users_comments = User.objects.all().order_by('-comment__id')[:3]
+featured_users = (featured_users_ideas | featured_users_comments)[:3]
+all_ideas = Idea.objects.all().order_by('-created_at')[:3]
 
 
 def home(request):
@@ -47,7 +56,7 @@ def register(request):
                 password.encode(), bcrypt.gensalt()).decode()
             # Save the new user in the database
             user = User.objects.create(
-                first_name=first_name, last_name=last_name, email=email, password=pw_hash, bio=bio)
+                first_name=first_name, last_name=last_name, email=email, password=pw_hash, bio=bio)  # noqa
 
             # Store the user's information in the session
             request.session['user'] = {
@@ -57,7 +66,7 @@ def register(request):
                 'email': user.email,
                 'bio': user.bio,
             }
-            # Redirect to the home page or any other page you want after successful registration
+            # Redirect to the home page or any other page you want after successful registration # noqa
             return redirect('home')
 
     # If the request method is GET, display the registration form
@@ -87,7 +96,7 @@ def login(request):
                 'email': user.email,
                 'bio': user.bio,
             }
-            # Redirect to the home page or any other page you want after successful login
+            # Redirect to the home page or any other page you want after successful login # noqa
             return redirect('home')
 
     # If the request method is GET, display the login form
@@ -99,16 +108,11 @@ def home_authenticated(request):
     user_id = request.session['user']['id']
     user = User.objects.get(pk=user_id)
 
-    # Fetch user-specific data for the home page (you can customize this based on your needs)
-    # For example, you can get the user's own ideas, starred ideas, etc.
-    user_ideas = Idea.objects.filter(user=user).order_by('-created_at')[:3]
-    starred_ideas = Idea.objects.filter(
-        star__user=user).order_by('-created_at')[:3]
-
     context = {
-        'user_ideas': user_ideas,
-        'starred_ideas': starred_ideas,
-        'user': user
+        'user': user,
+        'featured_ideas': featured_ideas,
+        'featured_users': featured_users,
+        'all_ideas': all_ideas,
     }
 
     return render(request, 'home_authenticated.html', context)
@@ -131,7 +135,7 @@ def my_ideas(request):
 
         return render(request, 'my_ideas.html', context)
     else:
-        # If the user is not logged in, redirect to the login page or any other page you want
+        # If the user is not logged in, redirect to the login page or any other page you want # noqa
         return redirect('login')
 
 
@@ -156,7 +160,7 @@ def create_idea(request):
         # Create the new idea
         user = User.objects.get(pk=user_id)
         idea = Idea.objects.create(user=user, title=title, content=content)
-        context = {
+        context = {  # noqa
             'user': user
         }
         # Redirect to the view idea page for the newly created idea
@@ -215,7 +219,7 @@ def edit_idea(request, idea_id):
         # Use the IdeaManager's basic_validator_idea for form validation
         errors = Idea.objects.basic_validator_idea(request.POST)
         if errors:
-            # If there are errors, display them as messages and render the form again with the entered data
+            # If there are errors, display them as messages and render the form again with the entered data # noqa
             for key, value in errors.items():
                 messages.error(request, value)
             context = {
@@ -232,7 +236,7 @@ def edit_idea(request, idea_id):
             # Redirect to the view idea page for the updated idea
             return redirect('view_idea', idea_id=idea.id)
 
-    # If the request method is GET, display the edit idea form with the idea data
+    # If the request method is GET, display the edit idea form with the idea data # noqa
     context = {
         'idea': idea,
         'title': idea.title,
@@ -254,7 +258,7 @@ def delete_idea(request, idea_id):
     if request.method == 'POST':
         # Delete the idea from the database
         idea.delete()
-        # Redirect to the my_ideas page or any other page you want after successful deletion
+        # Redirect to the my_ideas page or any other page you want after successful deletion # noqa
         return redirect('my_ideas')
 
     # If the request method is GET, display the delete idea confirmation page
@@ -268,5 +272,5 @@ def logout(request):
     # Clear the user's session and log them out
     request.session.flush()
 
-    # Redirect the user to the home page or any other page you want after logout
+    # Redirect the user to the home page or any other page you want after logout # noqa
     return redirect('home')
